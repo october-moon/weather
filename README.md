@@ -1,4 +1,4 @@
-# Weather
+# Weather  （学习使用）
 
 基于 高德开放平台 的 PHP 天气信息组件。
 
