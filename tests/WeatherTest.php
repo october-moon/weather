@@ -2,14 +2,15 @@
 
     namespace OctoberMoon\Weather\Tests;
 
-    use OctoberMoon\Weather\Exceptions\HttpException;
     use OctoberMoon\Weather\Exceptions\InvalidArgumentException;
     use OctoberMoon\Weather\Weather;
     use PHPUnit\Framework\TestCase;
-    use GuzzleHttp\Client;
     use GuzzleHttp\ClientInterface;
-    use GuzzleHttp\Psr7\Response;
-    use Mockery\Matcher\AnyArgs;
+    use PHPUnit\Framework\Attributes\CoversClass;
+    use PHPUnit\Framework\Attributes\UsesClass;
+
+    #[CoversClass(Weather::class)]
+    #[UsesClass(Weather::class)]
     class WeatherTest extends TestCase
     {
 
