@@ -125,7 +125,7 @@ $response = $w->getForecastsWeather('深圳');
 
 第三个参数为返回值类型，可选 `json` 与 `xml`，默认 json：
 
-`$response = $weather->getWeather('深圳', 'all', 'xml');`
+`$response = $weather->getLiveWeather('深圳', 'xml');`
 ## 示例：
 ```
 <response>
@@ -167,6 +167,7 @@ $format - 输出的数据格式，默认为 json 格式，当 output 设置为 �
 然后在 .env 中配置 WEATHER_API_KEY ：
 
 `WEATHER_API_KEY=xxxxxxxxxxxxxxxxxxxxx`
+
 可以用两种方式来获取 `OctoberMoon\Weather\Weather` 实例：
 
 ## 方法参数注入
@@ -176,7 +177,7 @@ $format - 输出的数据格式，默认为 json 格式，当 output 设置为 �
     .
     public function edit(Weather $weather)
     {
-    $response = $weather->getWeather('深圳');
+        $response = $weather->getLiveWeather('深圳');
     }
     .
     .
@@ -188,7 +189,7 @@ $format - 输出的数据格式，默认为 json 格式，当 output 设置为 �
     .
     public function edit()
     {
-    $response = app('weather')->getWeather('深圳');
+        $response = app('weather')->getLiveWeather('深圳');
     }
     .
     .
