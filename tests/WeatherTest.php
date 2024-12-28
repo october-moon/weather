@@ -1,6 +1,15 @@
 <?php
 
-    namespace OctoberMoon\Weather\Tests;
+/*
+ * This file is part of the october-moon/weather.
+ *
+ * (c) october-moon <invalid@example.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
+namespace OctoberMoon\Weather\Tests;
 
     use OctoberMoon\Weather\Exceptions\InvalidArgumentException;
     use OctoberMoon\Weather\Weather;
@@ -13,7 +22,6 @@
     #[UsesClass(Weather::class)]
     class WeatherTest extends TestCase
     {
-
         public function testGetLiveWeather()
         {
             // 将 getWeather 接口模拟为返回固定内容，以测试参数传递是否正确
