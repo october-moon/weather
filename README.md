@@ -50,7 +50,7 @@ $response = $w->getForecastsWeather('深圳');
 
 ## 获取近期天气预报
 
-`$response = $weather->getWeather('深圳', 'all');`
+`$response = $weather->getForecastsWeather('深圳');`
 
 ## 示例：
 ```php
