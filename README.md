@@ -17,7 +17,7 @@ use OctoberMoon\Weather\Weather;
 
 $key = 'xxxxxxxxxxxxxxxxxxxxxxxxxxx';
 
-$weather = new Weather($key);
+$w = new Weather($key);
 ```
 
 ## 获取实时天气
