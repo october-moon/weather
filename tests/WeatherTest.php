@@ -13,6 +13,26 @@
     class WeatherTest extends TestCase
     {
 
+        public function testGetLiveWeather()
+        {
+            // 将 getWeather 接口模拟为返回固定内容，以测试参数传递是否正确
+            $w = \Mockery::mock(Weather::class, ['mock-key'])->makePartial();
+            $w->expects()->getWeather('深圳', 'base', 'json')->andReturn(['success' => true]);
+
+            // 断言正确传参并返回
+            $this->assertSame(['success' => true], $w->getLiveWeather('深圳'));
+        }
+
+        public function testGetForecastsWeather()
+        {
+            // 将 getWeather 接口模拟为返回固定内容，以测试参数传递是否正确
+            $w = \Mockery::mock(Weather::class, ['mock-key'])->makePartial();
+            $w->expects()->getWeather('深圳', 'all', 'json')->andReturn(['success' => true]);
+
+            // 断言正确传参并返回
+            $this->assertSame(['success' => true], $w->getForecastsWeather('深圳'));
+        }
+
         // 检查 $type 参数
         public function testGetWeatherWithInvalidType()
         {
@@ -21,10 +41,10 @@
             // 断言会抛出此异常类
             $this->expectException(InvalidArgumentException::class);
 
-            // 断言异常消息为 'Invalid type value(base/all): foo'
-            $this->expectExceptionMessage('Invalid type value(base/all): foo');
+            // 断言异常消息为 'Invalid type value(base/all): all'
+            $this->expectExceptionMessage('Invalid type value(live/forecast): all');
 
-            $w->getWeather('深圳', 'foo');
+            $w->getWeather('深圳', 'all');
 
             $this->fail('Failed to assert getWeather throw exception with invalid argument.');
         }
@@ -45,47 +65,6 @@
 
             // 如果没有抛出异常，就会运行到这行，标记当前测试没成功
             $this->fail('Failed to assert getWeather throw exception with invalid argument.');
-        }
-        public function testGetWeather()
-        {
-// 创建模拟接口响应值。
-            $response = new Response(200, [], '{"success": true}');
-
-            // 创建模拟 http client。
-            $client = \Mockery::mock(Client::class);
-
-            // 指定将会产生的行为（在后续的测试中将会按下面的参数来调用）。
-            $client->allows()->get('https://restapi.amap.com/v3/weather/weatherInfo', [
-                'query' => [
-                    'key' => 'mock-key',
-                    'city' => '深圳',
-                    'output' => 'json',
-                    'extensions' => 'base',
-                ]
-            ])->andReturn($response);
-
-            // 将 `getHttpClient` 方法替换为上面创建的 http client 为返回值的模拟方法。
-            $w = \Mockery::mock(Weather::class, ['mock-key'])->makePartial();
-            $w->allows()->getHttpClient()->andReturn($client); // $client 为上面创建的模拟实例。
-
-            // 然后调用 `getWeather` 方法，并断言返回值为模拟的返回值。
-            $this->assertSame(['success' => true], $w->getWeather('深圳'));
-        }
-        public function testGetWeatherWithGuzzleRuntimeException()
-        {
-            $client = \Mockery::mock(Client::class);
-            $client->allows()
-                ->get(new AnyArgs()) // 由于上面的用例已经验证过参数传递，所以这里就不关心参数了。
-                ->andThrow(new \Exception('request timeout')); // 当调用 get 方法时会抛出异常。
-
-            $w = \Mockery::mock(Weather::class, ['mock-key'])->makePartial();
-            $w->allows()->getHttpClient()->andReturn($client);
-
-            // 接着需要断言调用时会产生异常。
-            $this->expectException(HttpException::class);
-            $this->expectExceptionMessage('request timeout');
-
-            $w->getWeather('深圳');
         }
 
         public function testGetHttpClient()

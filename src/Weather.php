@@ -26,6 +26,28 @@ class Weather
     }
 
     /**
+     *  获取实时天气
+     * @throws GuzzleException
+     * @throws InvalidArgumentException
+     * @throws HttpException
+     */
+    public function getLiveWeather($city, $format = 'json')
+    {
+        return $this->getWeather($city, 'base', $format);
+    }
+
+    /**
+     *  获取天气预报
+     * @throws GuzzleException
+     * @throws InvalidArgumentException
+     * @throws HttpException
+     */
+    public function getForecastsWeather($city, $format = 'json')
+    {
+        return $this->getWeather($city, 'all', $format);
+    }
+
+    /**
      * @throws GuzzleException
      * @throws InvalidArgumentException
      * @throws HttpException
@@ -41,7 +63,7 @@ class Weather
         if (!\in_array(\strtolower($format), ['xml', 'json'])) {
             throw new InvalidArgumentException('Invalid response format: '.$format);
         }
-        // 1. 对 `$format` 与 `$type` 参数进行检查，不在范围内的抛出异常。
+
         if (!\array_key_exists(\strtolower($type), $types)) {
             throw new InvalidArgumentException('Invalid type value(live/forecast): '.$type);
         }
