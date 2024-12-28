@@ -2,6 +2,7 @@
 
 基于 高德开放平台 的 PHP 天气信息组件（学习使用）。
 
+[![Tests](https://github.com/october-moon/weather/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/october-moon/weather/actions/workflows/tests.yml)
 ## 安装
 
 ```$ composer require october-moon/weather -vvv```
